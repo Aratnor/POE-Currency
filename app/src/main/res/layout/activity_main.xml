@@ -13,7 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/design_primary_toolbar"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             android:visibility="visible"
@@ -56,14 +56,14 @@
             android:layout_marginRight="8dp"
             android:text="@string/button_search"
             android:onClick="search"
+            android:background="@color/button_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner2" />
-
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="87dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
@@ -76,45 +76,49 @@
             card_view:layout_constraintTop_toBottomOf="@+id/button">
 
             <LinearLayout
+                android:id="@+id/result_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@color/item_background_color"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
+                android:visibility="gone"
+
                 >
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/armourer_scrap"
-                    android:adjustViewBounds="true"/>
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/item_id1"
+                    android:id="@+id/have_text_view"
                     android:layout_gravity="center"
                     android:textSize="24sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/item_text_color"
-                    android:text="x 1.7"/>
+                    android:textColor="@color/design_dark"
+                    />
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/have_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/armourer_scrap"
+                    android:adjustViewBounds="true"/>
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/arrow_icon"
                     android:adjustViewBounds="true" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/search_text_view"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/design_dark"
+                    />
                 <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/search_image_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/exalted_orb_icon"
                     android:adjustViewBounds="true"
                     />
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/item_id2"
-                    android:layout_gravity="center"
-                    android:textSize="24sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/item_text_color"
-                    android:text="x 2.3"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

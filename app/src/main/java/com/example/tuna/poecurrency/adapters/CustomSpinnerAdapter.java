@@ -12,13 +12,13 @@ import android.widget.TextView;
 
 import com.example.tuna.poecurrency.R;
 
-public class SpinnerAdapter extends ArrayAdapter<String> {
-    String [] itemNames;
+public class CustomSpinnerAdapter extends ArrayAdapter<String> {
+    private String [] itemNames;
     int [] itemIds;
-    int [] spinnerIcons;
-    Context activityContext;
-    public SpinnerAdapter(@NonNull Context context,
-                          String [] itemNames,int [] itemIds,int [] spinnerIcons) {
+    private int [] spinnerIcons;
+    private Context activityContext;
+    public CustomSpinnerAdapter(@NonNull Context context,
+                                String [] itemNames, int [] itemIds, int [] spinnerIcons) {
         super(context, R.layout.custom_spinner_row);
         this.itemNames = itemNames;
         this.spinnerIcons = spinnerIcons;

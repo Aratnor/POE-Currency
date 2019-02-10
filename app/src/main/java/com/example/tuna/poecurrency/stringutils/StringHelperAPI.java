@@ -14,6 +14,9 @@ public class StringHelperAPI {
         String[] lines = res.split(System.getProperty("line.separator"));
         String line = "";
         for(int i = 0;i<lines.length;i++){
+            if(lines[i].contains("Oopsie! Nothing was found. If you want to buy currency why don't you")){
+                return "0 0";
+            }
             lines[i] = lines[i].trim();
             if(lines[i].contains("large-3 columns displayoffer-centered")){
                 line = lines[i+1];

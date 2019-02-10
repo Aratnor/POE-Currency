@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:background="@color/design_white">
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/item_image"
         android:layout_width="wrap_content"
@@ -15,6 +16,6 @@
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/item_text_color"
+        android:textColor="@color/design_dark"
         />
 </LinearLayout>

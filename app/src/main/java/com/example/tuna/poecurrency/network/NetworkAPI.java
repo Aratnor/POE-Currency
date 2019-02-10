@@ -2,9 +2,6 @@ package com.example.tuna.poecurrency.network;
 
 import android.os.AsyncTask;
 
-import com.example.tuna.poecurrency.MainActivity;
-import com.example.tuna.poecurrency.async.OnTaskCompleted;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,12 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class NetworkAPI extends AsyncTask<String,Integer,String> {
-    private OnTaskCompleted listener;
 
-
-    public NetworkAPI(OnTaskCompleted listener){
-        this.listener=listener;
-    }
     private  String connectURL(String uri) {
         try {
             URL url = new URL(uri);
@@ -62,6 +54,5 @@ public class NetworkAPI extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        listener.onTaskCompleted();
     }
 }
