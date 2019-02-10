@@ -47,6 +47,8 @@ public class StringHelperAPI {
         String [] lines = resToLine(res);
         boolean check = false;
         String name = "";
+        StringBuilder namesArray = new StringBuilder();
+        StringBuilder idsArray = new StringBuilder();
         for(int i = 0;i<lines.length;i++){
             if(lines[i].contains("<div id=\"cat-want-0\"")){
                 check = true;
@@ -63,11 +65,21 @@ public class StringHelperAPI {
                     res = fetchNumRegex(lines[i]);
                     int id = Integer.parseInt(res);
                     Item item = new Item(name,id);
+                    if (items.size() == 1) {
+                        namesArray.append("{,\"").append(name).append("\"");
+                        idsArray.append("{,\"").append(id).append("\"");
+                    }
+                    else {
+                        namesArray.append(",\"").append(name).append("\"");
+                        idsArray.append(",").append(id);
+                    }
                     items.add(item);
                 }
 
             }
         }
+        System.out.println(namesArray.toString());
+        System.out.println(idsArray.toString());
         return items;
 
     }
