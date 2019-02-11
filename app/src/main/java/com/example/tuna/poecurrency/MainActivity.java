@@ -1,19 +1,24 @@
 package com.example.tuna.poecurrency;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.tuna.poecurrency.fragments.Exchange_Fragment;
+import com.example.tuna.poecurrency.fragments.Trade_Fragment;
 
 public class MainActivity extends AppCompatActivity{
     @Override
@@ -24,21 +29,38 @@ public class MainActivity extends AppCompatActivity{
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         setStatusBarColor();
+
+        BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
+
+        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getTitle().equals("Exchange")) {
+                    Exchange_Fragment exchange_fragment = new Exchange_Fragment();
+                    switchFragments(exchange_fragment);
+                }
+                else if(item.getTitle().equals("Trade")) {
+                    Trade_Fragment trade_fragment = new Trade_Fragment();
+                    switchFragments(trade_fragment);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        switchFragments();
+        Exchange_Fragment exchange_fragment = new Exchange_Fragment();
+        switchFragments(exchange_fragment);
         checkPermissions();
 
     }
 
-    private void switchFragments() {
+    private void switchFragments(Fragment fragment) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        Exchange_Fragment exchange_fragment = new Exchange_Fragment();
-        transaction.replace(R.id.fragment_container,exchange_fragment,"1");
+        transaction.replace(R.id.fragment_container,fragment,"1");
         transaction.addToBackStack(null);
         transaction.commit();
 

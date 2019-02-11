@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.example.tuna.poecurrency.elements.CurrencyTransaction;
 import com.example.tuna.poecurrency.elements.ItemProperties;
+import com.example.tuna.poecurrency.elements.TradeTransaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +84,53 @@ public class StringHelperAPI {
         }
         return transactions;
     }
+
+    public ArrayList<TradeTransaction> getAllTradeCurrencyTransactions(String res) {
+        String [] lines = resToLine(res);
+        ArrayList<TradeTransaction> transactions = new ArrayList<>();
+        for(int i = 0;i<lines.length;i++) {
+            lines[i] = lines[i].trim();
+            int sellCurrencyID = -1;
+            int buyCurrencyID = -1;
+            int stock = -1;
+            double sellValue = 0;
+            double buyValue = 0;
+            String userName = "";
+            String[] values = lines[i].split(">");
+            {
+                String[] words = values[0].split(" ");
+                for (String word : words) {
+                    if(word.contains("data-username")) {
+                        String sub = word.substring(13, word.length() - 1);
+                        userName = sub;
+                    } else if(word.contains("data-buycurrency")) {
+                        String sub = word.substring(18,word.length()-1);
+                        buyCurrencyID = Integer.parseInt(sub);
+
+                    } else if (word.contains("data-sellcurrency")) {
+                        String sub = word.substring(19, word.length() - 1);
+                        sellCurrencyID = Integer.parseInt(sub);
+
+                    } else if (word.contains("data-sellvalue")) {
+                        String sub = word.substring(16, word.length() - 1);
+                        sellValue = Double.parseDouble(sub);
+                    } else if (word.contains("data-buyvalue")) {
+                        String sub = word.substring(15, word.length() - 1);
+                        buyValue = Double.parseDouble(sub);
+                    } else if (word.contains("stock")) {
+                        String sub = word.substring(7,word.length()-1);
+                        stock = Integer.parseInt(sub);
+
+                    }
+                }
+            }
+            if(sellCurrencyID <=35 && buyCurrencyID <= 35)
+                transactions.add(new TradeTransaction(sellValue,buyValue,
+                        sellCurrencyID,buyCurrencyID,stock,userName));
+            }
+            return transactions;
+        }
+
     private boolean checkIsEmpty(){
         return res.contains("Oopsie! Nothing was found. If you want to buy currency why don't you");
     }
