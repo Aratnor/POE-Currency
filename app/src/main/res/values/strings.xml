@@ -4,4 +4,7 @@
     <string name="title">POE Currency</string>
     <string name="button_search">Search</string>
     <string name="info_text">text_id</string>
+    <string name="spinner_have_text">What do u have ?</string>
+    <string name="spinner_search_text">What do u want ?</string>
+    <string name="checkbox_search_all">Search All</string>
 </resources>

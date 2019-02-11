@@ -18,7 +18,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     private int [] spinnerIcons;
     private Context activityContext;
     public CustomSpinnerAdapter(@NonNull Context context,
-                                String [] itemNames, int [] itemIds, int [] spinnerIcons) {
+                                String [] itemNames, int [] spinnerIcons) {
         super(context, R.layout.custom_spinner_row);
         this.itemNames = itemNames;
         this.spinnerIcons = spinnerIcons;
