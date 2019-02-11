@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
         setSpinner();
         setStatusBarColor();
+        setCheckBoxes();
     }
 
     @Override
@@ -69,8 +71,33 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private boolean getAllSearchCheckBoxStatus() {
-        CheckBox checkBox = findViewById(R.id.search_all_checkBox);
+    private void setCheckBoxes() {
+        final CheckBox want = findViewById(R.id.search_all_want_checkBox);
+        final CheckBox have = findViewById(R.id.search_all_have_checkBox);
+        want.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+              @Override
+              public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if(isChecked) {
+                    have.setChecked(false);
+                }
+              }
+          });
+          have.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+              @Override
+              public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                  if(isChecked) {
+                      want.setChecked(false);
+                  }
+              }
+          });
+    }
+
+    private boolean getAllWantCheckBoxStatus() {
+        CheckBox checkBox = findViewById(R.id.search_all_want_checkBox);
+        return checkBox.isChecked();
+    }
+    private  boolean getAllHaveCheckBoxStatus() {
+        CheckBox checkBox = findViewById(R.id.search_all_have_checkBox);
         return checkBox.isChecked();
     }
 
@@ -88,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
         return helper.getCurrencyRate();
     }
 
-    private void getAllCurrencyRate(String uri) {
+    private void getAllCurrencyRate(String uri,int position) {
         networkConnection = new NetworkAPI();
         String res = null;
         try {
@@ -107,7 +134,7 @@ public class MainActivity extends AppCompatActivity{
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        listViewAdapter = new CustomListViewAdapter(this,transactions,spinner2Pos);
+        listViewAdapter = new CustomListViewAdapter(this,transactions,position);
         listViewAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(listViewAdapter);
 
@@ -119,7 +146,6 @@ public class MainActivity extends AppCompatActivity{
 
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this,ItemProperties.itemNames
                 , ItemProperties.itemImages);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
 
         spinner1.setAdapter(adapter);
 
@@ -130,27 +156,35 @@ public class MainActivity extends AppCompatActivity{
 
 
     public void search(View view) {
-        if(getAllSearchCheckBoxStatus()) {
+        if(getAllWantCheckBoxStatus() && getAllHaveCheckBoxStatus()) {
+            String url = "http://currency.poe.trade/search?league=Betrayal&online=x&stock=&want=&have=";
+        }
+        else if(getAllWantCheckBoxStatus()) {
             String url = prepareAllSearchURL(ItemProperties.itemIds[spinner2Pos]);
             System.out.println("All Select url is :" + url);
-            getAllCurrencyRate(url);
+            getAllCurrencyRate(url,spinner2Pos);
+        }
+        else if(getAllHaveCheckBoxStatus()) {
+            String url = prepareAllSearchURL(ItemProperties.itemIds[spinner1Pos]);
+            getAllCurrencyRate(url,spinner1Pos);
         }
         else {
-            /*String url = prepareURL(ItemProperties.itemIds[spinner1Pos],ItemProperties.itemIds[spinner2Pos]);
-            ImageView view1 = findViewById(R.id.have_image_view);
-            view1.setImageResource(ItemProperties.itemImages[spinner1Pos]);
-            ImageView view2 = findViewById(R.id.search_image_view);
-            view2.setImageResource(ItemProperties.itemImages[spinner2Pos]);
+            String url = prepareURL(ItemProperties.itemIds[spinner1Pos],ItemProperties.itemIds[spinner2Pos]);
 
             String [] vals = getCurrencyRate(url).split(" ");
-            TextView textview1 = findViewById(R.id.have_text_view);
-            String text1 = vals[0]+"x";
-            textview1.setText(text1);
-            TextView textView2= findViewById(R.id.search_text_view);
-            String text2 = vals[1]+"x";
-            textView2.setText(text2);
-            LinearLayout layout = findViewById(R.id.result_layout);
-            layout.setVisibility(View.VISIBLE);*/
+            double value1 = Double.parseDouble(vals[0]);
+            double value2 = Double.parseDouble(vals[1]);
+            transactions = new ArrayList<>();
+
+            CurrencyTransaction transaction = new CurrencyTransaction(value1,value2,spinner1Pos);
+            transactions.add(transaction);
+            RecyclerView mRecyclerView = findViewById(R.id.transactions);
+            mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            listViewAdapter = new CustomListViewAdapter(this,transactions,spinner2Pos);
+            listViewAdapter.notifyDataSetChanged();
+            mRecyclerView.setAdapter(listViewAdapter);
         }
     }
     private void spinnerOnClickPrepare(Spinner s1, Spinner s2) {

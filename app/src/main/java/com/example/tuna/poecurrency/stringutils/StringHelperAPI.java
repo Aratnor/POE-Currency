@@ -45,22 +45,6 @@ public class StringHelperAPI {
         return result.toString().trim();
     }
 
-    private String getValueIdInLine(String line) {
-        String [] words = line.split(" ");
-        StringBuilder result = new StringBuilder();
-        for(int i = 0;i<words.length;i++) {
-            if(words[i].contains("cur20") && !words[i].contains("cur20-2\"")){
-                char [] chars = words[i].toCharArray();
-                for(int j = 6;j<chars.length;j++){
-                    if(chars[j] == '"')return result.toString();
-                    if(chars[j] != '"'){
-                        result.append(chars[j]);
-                    }
-                }
-            }
-        }
-        return result.toString();
-    }
     public  ArrayList<CurrencyTransaction> getAllCurrencyTransactions() {
         String [] lines = resToLine(res);
         ArrayList<CurrencyTransaction> transactions = new ArrayList<>();

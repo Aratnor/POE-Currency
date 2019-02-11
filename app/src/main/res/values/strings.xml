@@ -6,5 +6,8 @@
     <string name="info_text">text_id</string>
     <string name="spinner_have_text">What do u have ?</string>
     <string name="spinner_search_text">What do u want ?</string>
-    <string name="checkbox_search_all">Search All</string>
+    <string name="checkbox_search_all">All have Item</string>
+    <string name="checkbox_search_all_2">All search Item</string>
+    <string name="bottom_nav_exchange">Exchange</string>
+    <string name="bottom_nav_trade">Trade</string>
 </resources>
