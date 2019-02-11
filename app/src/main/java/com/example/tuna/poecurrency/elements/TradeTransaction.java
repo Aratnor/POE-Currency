@@ -40,4 +40,11 @@ public class TradeTransaction {
     public String getUserName() {
         return userName;
     }
+
+    @Override
+    public String toString() {
+        return "SellValue :" + sellValue + "\nSellId:" + sellId
+                + "\nBuyValue:" +buyValue + "\nBuyId:" +  buyId
+                + "\nStock:" + stock;
+    }
 }

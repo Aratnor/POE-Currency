@@ -5,30 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.Trade_Fragment">
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <Spinner
             android:id="@+id/trade_spinner_have"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/trade_spinner_want"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_weight="1"
             android:src="@drawable/search_icon"
             app:backgroundTint="@color/button_color"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,4 +48,17 @@
         app:backgroundTint="@color/button_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/trade_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </android.support.constraint.ConstraintLayout>

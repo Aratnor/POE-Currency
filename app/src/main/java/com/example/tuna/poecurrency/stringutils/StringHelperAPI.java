@@ -96,37 +96,45 @@ public class StringHelperAPI {
             double sellValue = 0;
             double buyValue = 0;
             String userName = "";
-            String[] values = lines[i].split(">");
-            {
-                String[] words = values[0].split(" ");
-                for (String word : words) {
-                    if(word.contains("data-username")) {
-                        String sub = word.substring(13, word.length() - 1);
-                        userName = sub;
-                    } else if(word.contains("data-buycurrency")) {
-                        String sub = word.substring(18,word.length()-1);
-                        buyCurrencyID = Integer.parseInt(sub);
+            if(lines[i].contains("displayoffer") && !lines[i].contains("large") && lines[i].contains("username")) {
+                String[] values = lines[i].split(">");
+                {
+                    String[] words = values[0].split(" ");
+                    for (String word : words) {
+                        if (word.contains("data-username")) {
+                            String sub = word.substring(15, word.length() - 1);
+                          //  System.out.println("User name :" + sub);
+                            userName = sub;
+                        } else if (word.contains("data-buycurrency")) {
+                            String sub = word.substring(18, word.length() - 1);
+                          //  System.out.println("Buy Currency :" + sub);
+                            buyCurrencyID = Integer.parseInt(sub);
 
-                    } else if (word.contains("data-sellcurrency")) {
-                        String sub = word.substring(19, word.length() - 1);
-                        sellCurrencyID = Integer.parseInt(sub);
+                        } else if (word.contains("data-sellcurrency")) {
+                            String sub = word.substring(19, word.length() - 1);
+                          //  System.out.println("Sell Currency :" + sub);
+                            sellCurrencyID = Integer.parseInt(sub);
 
-                    } else if (word.contains("data-sellvalue")) {
-                        String sub = word.substring(16, word.length() - 1);
-                        sellValue = Double.parseDouble(sub);
-                    } else if (word.contains("data-buyvalue")) {
-                        String sub = word.substring(15, word.length() - 1);
-                        buyValue = Double.parseDouble(sub);
-                    } else if (word.contains("stock")) {
-                        String sub = word.substring(7,word.length()-1);
-                        stock = Integer.parseInt(sub);
+                        } else if (word.contains("data-sellvalue")) {
+                            String sub = word.substring(16, word.length() - 1);
+                           // System.out.println("Sell Value :" + sub);
+                            sellValue = Double.parseDouble(sub);
+                        } else if (word.contains("data-buyvalue")) {
+                            String sub = word.substring(15, word.length() - 1);
+                           // System.out.println("Buy Currency :" + sub);
+                            buyValue = Double.parseDouble(sub);
+                        } else if (word.contains("data-stock")) {
+                            String sub = word.substring(12, word.length() - 1);
+                            //System.out.println("Stock :" + sub);
+                            stock = Integer.parseInt(sub);
 
+                        }
                     }
                 }
+                if(sellCurrencyID <=35 && buyCurrencyID <= 35)
+                    transactions.add(new TradeTransaction(sellValue,buyValue,
+                            sellCurrencyID,buyCurrencyID,stock,userName));
             }
-            if(sellCurrencyID <=35 && buyCurrencyID <= 35)
-                transactions.add(new TradeTransaction(sellValue,buyValue,
-                        sellCurrencyID,buyCurrencyID,stock,userName));
             }
             return transactions;
         }
