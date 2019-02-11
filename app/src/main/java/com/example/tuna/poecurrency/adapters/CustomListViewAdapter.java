@@ -26,6 +26,9 @@ public class CustomListViewAdapter extends RecyclerView.Adapter<CustomListViewAd
     private ArrayList<CurrencyTransaction> transactions;
     private int count;
     private int positionHave;
+    public CustomListViewAdapter(Context context) {
+        this.context = context;
+    }
     public CustomListViewAdapter(@NonNull Context context, ArrayList<CurrencyTransaction> transactions,int positionHave) {
         this.context = context;
         this.transactions = transactions;
