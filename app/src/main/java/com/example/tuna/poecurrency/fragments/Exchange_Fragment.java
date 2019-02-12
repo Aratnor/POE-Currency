@@ -1,20 +1,15 @@
 package com.example.tuna.poecurrency.fragments;
 
 import android.content.Context;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -31,17 +26,17 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class Exchange_Fragment extends Fragment{
-    CheckBox want ,have;
-    Spinner spinner1,spinner2;
+    CheckBox sell ,buy ;
+    Spinner spinnerSell,spinnerBuy,spinnerLeague;
     RecyclerView mRecyclerView;
 
     CustomSpinnerAdapter adapter;
-    int spinner1Pos = 0;
-    int spinner2Pos = 0;
+    int spinner_sell_position = 0;
+    int spinner_buy_position = 0;
+    String spinner_league_title;
     static ArrayList<CurrencyTransaction> transactions;
     CustomListViewAdapter listViewAdapter;
     NetworkAPI networkConnection;
-    private RecyclerView.LayoutManager mLayoutManager;
     View rootView;
     public Exchange_Fragment() {
         // Required empty public constructor
@@ -56,11 +51,12 @@ public class Exchange_Fragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_exchange_, container, false);
-        want = rootView.findViewById(R.id.search_all_want_checkBox);
-        have = rootView.findViewById(R.id.search_all_have_checkBox);
+        buy = rootView.findViewById(R.id.search_all_buy_checkBox);
+        sell = rootView.findViewById(R.id.search_all_sell_checkBox);
 
-        spinner1 = rootView.findViewById(R.id.spinner1);
-        spinner2 = rootView.findViewById(R.id.spinner2);
+        spinnerSell = rootView.findViewById(R.id.spinnerSell);
+        spinnerBuy = rootView.findViewById(R.id.spinnerBuy);
+        spinnerLeague = rootView.findViewById(R.id.league);
 
         setAdapter(getActivity());
         setSpinner();
@@ -104,7 +100,35 @@ public class Exchange_Fragment extends Fragment{
         return helper.getCurrencyRate();
     }
 
-    private void getAllCurrencyRate(String uri,int position) {
+    private void getAllCurrencyRate(String uri,int position,int flag) {
+        switch (flag) {
+            case 1 :
+                getAllSellCurrency(uri,position);
+                break;
+            case 2: getAllBuyCurrency(uri,position);
+            break;
+        }
+
+    }
+    private void getAllSellCurrency(String uri,int position) {
+        networkConnection = new NetworkAPI();
+        String res = null;
+        try {
+            res = networkConnection.execute(uri).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        StringHelperAPI helperAPI = new StringHelperAPI(res);
+        transactions = helperAPI.getAllBuyCurrencyTransactions();
+        listViewAdapter = new CustomListViewAdapter(getActivity(),transactions,position);
+        listViewAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(listViewAdapter);
+        listViewAdapter.notifyDataSetChanged();
+    }
+
+    private void getAllBuyCurrency(String uri,int position) {
         networkConnection = new NetworkAPI();
         String res = null;
         try {
@@ -120,34 +144,34 @@ public class Exchange_Fragment extends Fragment{
         listViewAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(listViewAdapter);
         listViewAdapter.notifyDataSetChanged();
-
     }
 
-
     public void search() {
-        if(getAllWantCheckBoxStatus()) {
-            String url = prepareAllSearchURL(ItemProperties.itemIds[spinner2Pos]);
+        spinner_league_title = spinnerLeague.getSelectedItem().toString();
+        if(getAllSellCheckBoxStatus()) {
+            String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
             System.out.println("All Select url is :" + url);
-            getAllCurrencyRate(url,spinner2Pos);
+            getAllCurrencyRate(url, spinner_buy_position,1);
         }
-        else if(getAllHaveCheckBoxStatus()) {
-            String url = prepareAllSearchURL(ItemProperties.itemIds[spinner1Pos]);
-            getAllCurrencyRate(url,spinner1Pos);
+        else if(getAllBuyCheckBoxStatus()) {
+            String url = prepareAllSearchURL(ItemProperties.itemIds[spinner_sell_position]);
+            System.out.println("URl of allbuy :" + url);
+            getAllCurrencyRate(url, spinner_sell_position,2);
         }
         else {
-            String url = prepareURL(ItemProperties.itemIds[spinner1Pos],ItemProperties.itemIds[spinner2Pos]);
+            String url = prepareURL(ItemProperties.itemIds[spinner_sell_position],ItemProperties.itemIds[spinner_buy_position]);
 
             String [] vals = getCurrencyRate(url).split(" ");
             double value1 = Double.parseDouble(vals[0]);
             double value2 = Double.parseDouble(vals[1]);
             transactions = new ArrayList<>();
 
-            CurrencyTransaction transaction = new CurrencyTransaction(value1,value2,spinner1Pos);
+            CurrencyTransaction transaction = new CurrencyTransaction(value1,value2, spinner_sell_position);
             transactions.add(transaction);
             mRecyclerView.setHasFixedSize(true);
-            mLayoutManager = new LinearLayoutManager(getActivity());
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mRecyclerView.setLayoutManager(mLayoutManager);
-            listViewAdapter = new CustomListViewAdapter(getActivity(),transactions,spinner2Pos);
+            listViewAdapter = new CustomListViewAdapter(getActivity(),transactions, spinner_buy_position);
             listViewAdapter.notifyDataSetChanged();
             mRecyclerView.setAdapter(listViewAdapter);
         }
@@ -159,56 +183,64 @@ public class Exchange_Fragment extends Fragment{
     }
 
     private void setCheckBoxes() {
-        want.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        sell.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if(isChecked) {
-                    have.setChecked(false);
+                    buy.setChecked(false);
                 }
             }
         });
-        have.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        buy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if(isChecked) {
-                    want.setChecked(false);
+                    sell.setChecked(false);
                 }
             }
         });
     }
 
     private String prepareURL(int id1,int id2){
-        return "http://currency.poe.trade/search?league=Betrayal&online=x&stock=&want="
-                + id1 +"&have=" + id2;
+        return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want="
+                + id2 +"&have=" + id1;
     }
 
     private String prepareAllSearchURL(int id2) {
-        return "http://currency.poe.trade/search?league=Betrayal&online=x&stock=&want=&have=" + id2;
+        return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want=&have=" + id2;
+    }
+    private String prepareAllBuyURL(int id1) {
+        return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want="+id1 +"&have=";
     }
 
-
-    private boolean getAllWantCheckBoxStatus() {
-        return want.isChecked();
+    private boolean getAllSellCheckBoxStatus() {
+        return sell.isChecked();
     }
-    private  boolean getAllHaveCheckBoxStatus() {
-        return have.isChecked();
+    private  boolean getAllBuyCheckBoxStatus() {
+        return buy.isChecked();
     }
     private void setSpinner(){
 
-        spinner1.setAdapter(adapter);
+        spinnerSell.setAdapter(adapter);
 
-        spinner2.setAdapter(adapter);
+        spinnerBuy.setAdapter(adapter);
 
+        ArrayAdapter<CharSequence> league_adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.league_array, android.R.layout.simple_spinner_item);
+        league_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerLeague.setAdapter(league_adapter);
         spinnerOnClickPrepare();
     }
 
     private void spinnerOnClickPrepare() {
-        spinner1.setSelection(0);
-        spinner2.setSelection(0);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerSell.setSelection(0);
+        spinnerBuy.setSelection(0);
+        spinnerLeague.setSelection(0);
+        spinnerSell.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                spinner1Pos = position;
+                spinner_sell_position = position;
             }
 
             @Override
@@ -217,10 +249,10 @@ public class Exchange_Fragment extends Fragment{
             }
 
         });
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerBuy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                spinner2Pos = position;
+                spinner_buy_position = position;
             }
 
             @Override

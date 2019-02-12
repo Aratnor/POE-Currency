@@ -85,6 +85,45 @@ public class StringHelperAPI {
         return transactions;
     }
 
+    public  ArrayList<CurrencyTransaction> getAllBuyCurrencyTransactions() {
+        String [] lines = resToLine(res);
+        ArrayList<CurrencyTransaction> transactions = new ArrayList<>();
+        @SuppressLint("UseSparseArrays") HashMap<Integer,Double> map = new HashMap<>();
+        for(int i = 0;i<lines.length;i++) {
+            lines[i] = lines[i].trim();
+            int currencyID = -1 ;
+            double sellValue = 0;
+            double buyValue = 0;
+            if(lines[i].contains("displayoffer") && !lines[i].contains("large") && lines[i].contains("username")) {
+                String[] values = lines[i].split(">"); {
+                    String [] words = values[0].split(" ");
+                    for(String word : words) {
+                        if(word.contains("data-buycurrency")){
+                            String sub = word.substring(18,word.length()-1);
+                            currencyID = Integer.parseInt(sub);
+
+                        }
+                        else if(word.contains("data-sellvalue")){
+                            String sub = word.substring(16,word.length()-1);
+                            buyValue = Double.parseDouble(sub);
+                        }
+                        else if(word.contains("data-buyvalue")) {
+                            String sub = word.substring(15,word.length()-1);
+                            sellValue = Double.parseDouble(sub);
+                        }
+                    }
+                }
+                int currencyPosition = ItemProperties.getPosition(currencyID);
+                if(currencyPosition >= 0 && !map.containsKey(currencyPosition)) {
+                    map.put(currencyPosition,sellValue);
+                    transactions.add(new CurrencyTransaction(buyValue,sellValue,currencyPosition));
+                }
+            }
+
+        }
+        return transactions;
+    }
+
     public ArrayList<TradeTransaction> getAllTradeCurrencyTransactions(String res) {
         String [] lines = resToLine(res);
         ArrayList<TradeTransaction> transactions = new ArrayList<>();

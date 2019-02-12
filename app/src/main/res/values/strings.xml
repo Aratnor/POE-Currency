@@ -4,12 +4,19 @@
     <string name="title">POE Currency</string>
     <string name="button_search">Search</string>
     <string name="info_text">text_id</string>
-    <string name="spinner_have_text">What do u have ?</string>
-    <string name="spinner_search_text">What do u want ?</string>
-    <string name="checkbox_search_all">All have Item</string>
-    <string name="checkbox_search_all_2">All search Item</string>
+    <string name="spinner_have_text">What will u sell ?</string>
+    <string name="spinner_search_text">What will u buy ?</string>
+    <string name="checkbox_search_all">All Buy</string>
+    <string name="checkbox_search_all_2">All Sell</string>
     <string name="bottom_nav_exchange">Exchange</string>
     <string name="bottom_nav_trade">Trade</string>
+    <string name="league_betrayal">Betrayal</string>
+    <string name="league_hardcore_betrayal">Hardcore Betrayal</string>
+    <string name="league_standard">Standard</string>
+    <string name="league_hardcore">Hardcore</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="send_message">Send Message</string>
+    <string name="look_stock">Look stock</string>
 </resources>

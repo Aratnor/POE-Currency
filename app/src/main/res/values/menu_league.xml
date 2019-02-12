@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="league_array">
+        <item>@string/league_betrayal</item>
+        <item>@string/league_hardcore_betrayal</item>
+        <item>@string/league_standard</item>
+        <item>@string/league_hardcore</item>
+    </string-array>
+</resources>

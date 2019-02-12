@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,11 @@ public class Trade_Fragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_trade_, container, false);
         spinner_have = root.findViewById(R.id.trade_spinner_have);
         spinner_search = root.findViewById(R.id.trade_spinner_want);
+
         recyclerView = root.findViewById(R.id.trade_list_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+
         setAdapter(getActivity());
         setSpinner();
         spinnerOnClickPrepare();
@@ -90,10 +95,12 @@ public class Trade_Fragment extends Fragment {
 
     private void setRecyclerAdapter() {
         tradeAdapter = new CustomTradeAdapter(getActivity(),transactions);
+        tradeAdapter.notifyDataSetChanged();
     }
 
     private void setRecyclerViewWithAdapter() {
         recyclerView.setAdapter(tradeAdapter);
+        tradeAdapter.notifyDataSetChanged();
     }
 
     private String prepareUrl() {
@@ -102,7 +109,7 @@ public class Trade_Fragment extends Fragment {
                 +ItemProperties.itemIds[spinner_have_pos];
         System.out.println("Last url :" +url);
         try {
-            return networkConnection.execute(url).get();
+            return new NetworkAPI().execute(url).get();
 
         } catch (ExecutionException e) {
             e.printStackTrace();

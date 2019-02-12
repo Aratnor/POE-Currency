@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/linearLayout2"
+    android:gravity="center_horizontal"
+    android:weightSum="7"
+    android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/trade_stock_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:src="@drawable/stock_icon"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/look_stock" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/list_trade_view_row_sell_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:textColor="@color/design_dark"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/list_trade_view_row_sell_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:src="@mipmap/armourer_scrap" />
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/list_trade_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/equal_icon"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/list_trade_view_row_buy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="@color/design_dark"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/list_trade_view_row_buy_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/armourer_scrap" />
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/message_icon"
+            android:contentDescription="@string/send_message" />
+    </LinearLayout>

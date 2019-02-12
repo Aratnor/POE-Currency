@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity{
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
                 if(item.getTitle().equals("Exchange")) {
                     Exchange_Fragment exchange_fragment = new Exchange_Fragment();
                     switchFragments(exchange_fragment);
