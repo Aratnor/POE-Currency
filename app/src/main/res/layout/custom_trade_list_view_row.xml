@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/linearLayout2"
+    android:id="@+id/trade_linear_layout"
     android:gravity="center_horizontal"
     android:weightSum="7"
     android:orientation="horizontal">
@@ -70,7 +71,7 @@
             android:adjustViewBounds="true"
             android:src="@mipmap/armourer_scrap" />
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/send_message_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
