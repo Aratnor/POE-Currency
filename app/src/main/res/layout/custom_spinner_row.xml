@@ -4,18 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/design_white">
+    android:background="@color/game_background_color">
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/item_image"
+        android:background="@color/game_icon_background_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"/>
+        android:layout_marginRight="4dp"
+        android:adjustViewBounds="true"
+        android:layout_marginEnd="4dp" />
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/item_name"
         android:layout_gravity="center"
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/design_dark"
+        android:background="@color/game_background_color"
+        android:textColor="@color/game_text_color"
         />
 </LinearLayout>

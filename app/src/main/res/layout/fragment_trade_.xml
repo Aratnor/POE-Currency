@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/game_background_color"
     tools:context=".fragments.Trade_Fragment">
 
     <LinearLayout
@@ -21,6 +22,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
+            android:popupBackground="@color/game_icon_background_color"
+            android:background="@color/game_icon_background_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +36,8 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:src="@drawable/search_icon"
-            app:backgroundTint="@color/button_color"
+            android:popupBackground="@color/game_icon_background_color"
+            android:background="@color/game_icon_background_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>

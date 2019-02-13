@@ -8,7 +8,8 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
     card_view:cardCornerRadius="4dp"
-    android:layout_marginRight="8dp">
+    android:layout_marginRight="8dp"
+    card_view:cardBackgroundColor="@color/game_icon_background_color">
 
     <LinearLayout
         android:id="@+id/result_layout"
@@ -25,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/design_dark"
-            android:textSize="16sp" />
+            android:textColor="@color/game_text_color"
+            android:textSize="24sp" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/list_view_row_image1"
@@ -47,8 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/design_dark"
-            android:textSize="16sp" />
+            android:textColor="@color/game_text_color"
+            android:textSize="24sp" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/list_view_row_image2"

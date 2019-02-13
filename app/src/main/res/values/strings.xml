@@ -10,13 +10,10 @@
     <string name="checkbox_search_all_2">All Sell</string>
     <string name="bottom_nav_exchange">Exchange</string>
     <string name="bottom_nav_trade">Trade</string>
-    <string name="league_betrayal">Betrayal</string>
-    <string name="league_hardcore_betrayal">Hardcore Betrayal</string>
-    <string name="league_standard">Standard</string>
-    <string name="league_hardcore">Hardcore</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="send_message">Send Message</string>
     <string name="look_stock">Look stock</string>
+    <string name="drop_down_icon">Drop down icon</string>
 </resources>

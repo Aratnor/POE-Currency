@@ -14,7 +14,6 @@ import com.example.tuna.poecurrency.R;
 
 public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     private String [] itemNames;
-    int [] itemIds;
     private int [] spinnerIcons;
     private Context activityContext;
     public CustomSpinnerAdapter(@NonNull Context context,

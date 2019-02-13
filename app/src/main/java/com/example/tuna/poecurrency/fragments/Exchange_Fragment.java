@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.app.Fragment;
 import com.example.tuna.poecurrency.R;
+import com.example.tuna.poecurrency.adapters.CustomLeagueSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomListViewAdapter;
 import com.example.tuna.poecurrency.adapters.CustomSpinnerAdapter;
 import com.example.tuna.poecurrency.elements.CurrencyTransaction;
@@ -33,7 +34,7 @@ public class Exchange_Fragment extends Fragment{
     CustomSpinnerAdapter adapter;
     int spinner_sell_position = 0;
     int spinner_buy_position = 0;
-    String spinner_league_title;
+    String spinner_league_title = "Betrayal";
     static ArrayList<CurrencyTransaction> transactions;
     CustomListViewAdapter listViewAdapter;
     NetworkAPI networkConnection;
@@ -147,7 +148,7 @@ public class Exchange_Fragment extends Fragment{
     }
 
     public void search() {
-        spinner_league_title = spinnerLeague.getSelectedItem().toString();
+        //spinner_league_title = spinnerLeague.getSelectedItem().toString();
         if(getAllSellCheckBoxStatus()) {
             String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
             System.out.println("All Select url is :" + url);
@@ -225,9 +226,8 @@ public class Exchange_Fragment extends Fragment{
 
         spinnerBuy.setAdapter(adapter);
 
-        ArrayAdapter<CharSequence> league_adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.league_array, android.R.layout.simple_spinner_item);
-        league_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        CustomLeagueSpinnerAdapter league_adapter =
+                new CustomLeagueSpinnerAdapter(getActivity(),ItemProperties.leagues);
 
         spinnerLeague.setAdapter(league_adapter);
         spinnerOnClickPrepare();

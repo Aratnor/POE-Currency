@@ -29,6 +29,10 @@ public final class ItemProperties {
             R.drawable.eternal_orb_inventory_icon,R.drawable.perandus_coin_inventory_icon,R.drawable.silver_coin_inventory_icon
     };
 
+    public static final String [] leagues = {
+            "Betrayal","Hardcore Betrayal","Standard","Hardcore"
+    };
+
     public static int getPosition(int id) {
         for(int i = 0;i<itemIds.length;i++) {
             if(itemIds[i] == id) return i;
