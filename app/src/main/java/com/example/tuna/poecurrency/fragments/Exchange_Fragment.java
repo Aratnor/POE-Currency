@@ -17,16 +17,18 @@ import com.example.tuna.poecurrency.R;
 import com.example.tuna.poecurrency.adapters.CustomLeagueSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomListViewAdapter;
 import com.example.tuna.poecurrency.adapters.CustomSpinnerAdapter;
+import com.example.tuna.poecurrency.async.OneSearchWorker;
 import com.example.tuna.poecurrency.elements.CurrencyTransaction;
 import com.example.tuna.poecurrency.elements.Item;
 import com.example.tuna.poecurrency.elements.ItemProperties;
+import com.example.tuna.poecurrency.interfaces.UpdateList;
 import com.example.tuna.poecurrency.network.NetworkAPI;
 import com.example.tuna.poecurrency.stringutils.StringHelperAPI;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class Exchange_Fragment extends Fragment{
+public class Exchange_Fragment extends Fragment implements UpdateList {
     CheckBox sell_checkBox, buy_checkBox;
     Spinner spinnerSell,spinnerBuy,spinnerLeague;
     RecyclerView mRecyclerView;
@@ -87,18 +89,20 @@ public class Exchange_Fragment extends Fragment{
         super.onDetach();
     }
 
-    private String getCurrencyRate(String uri){
+    private void getOneCurrencyTransaction(){
         networkConnection = new NetworkAPI();
         String res = null;
+        String url = prepareURL(ItemProperties.itemIds[spinner_sell_position],ItemProperties.itemIds[spinner_buy_position]);
         try {
-            res = networkConnection.execute(uri).get();
+            res = networkConnection.execute(url).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        StringHelperAPI helper = new StringHelperAPI(res);
-        return helper.getCurrencyRate();
+        String spinnerSelPos = spinner_sell_position+"";
+        OneSearchWorker oneSearchWorker = new OneSearchWorker(this);
+        oneSearchWorker.execute(res,spinnerSelPos);
     }
 
     private void getAllCurrencyRate(String uri,int position,int flag) {
@@ -148,10 +152,8 @@ public class Exchange_Fragment extends Fragment{
     }
 
     public void search() {
-        //spinner_league_title = spinnerLeague.getSelectedItem().toString();
         if(getAllSellCheckBoxStatus()) {
             String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
-            //spinnerBuy.setSelection(ItemProperties.itemNames.length-1);
             System.out.println("All Select url is :" + url);
             getAllCurrencyRate(url, spinner_buy_position,1);
         }
@@ -162,29 +164,7 @@ public class Exchange_Fragment extends Fragment{
             getAllCurrencyRate(url, spinner_sell_position,2);
         }
         else {
-            String url = prepareURL(ItemProperties.itemIds[spinner_sell_position],ItemProperties.itemIds[spinner_buy_position]);
-
-            String [] vals = getCurrencyRate(url).split(" ");
-            double value1;
-            double value2;
-            if(vals[0].equals("No-Trade")){
-                value1 = 0;
-                value2 = 0;
-            }
-            else {
-                value1 = Double.parseDouble(vals[0]);
-                value2 = Double.parseDouble(vals[1]);
-            }
-            transactions = new ArrayList<>();
-
-            CurrencyTransaction transaction = new CurrencyTransaction(value1,value2, spinner_sell_position);
-            transactions.add(transaction);
-            mRecyclerView.setHasFixedSize(true);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            listViewAdapter = new CustomListViewAdapter(getActivity(),transactions, spinner_buy_position);
-            listViewAdapter.notifyDataSetChanged();
-            mRecyclerView.setAdapter(listViewAdapter);
+            getOneCurrencyTransaction();
         }
     }
 
@@ -271,5 +251,18 @@ public class Exchange_Fragment extends Fragment{
             }
 
         });
+    }
+
+    @Override
+    public void updateOneItem(CurrencyTransaction val) {
+
+        transactions = new ArrayList<>();
+        transactions.add(val);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        listViewAdapter = new CustomListViewAdapter(getActivity(),transactions, spinner_buy_position);
+        listViewAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(listViewAdapter);
     }
 }

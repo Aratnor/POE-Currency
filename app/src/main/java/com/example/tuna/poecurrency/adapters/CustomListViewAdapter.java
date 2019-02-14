@@ -67,7 +67,9 @@ public class CustomListViewAdapter extends RecyclerView.Adapter<CustomListViewAd
         public void bindCurrencyTransaction(CurrencyTransaction transaction) {
             itemText1.setText("1 x");
             itemImage1.setImageResource(ItemProperties.itemImages[positionHave]);
-            double ratio = transaction.getSellCurrency()/ transaction.getBuyCurrency();
+            double ratio ;
+            if(transaction.getBuyCurrency() == 0) ratio =0;
+            else ratio = transaction.getSellCurrency()/ transaction.getBuyCurrency();
             BigDecimal bd = new BigDecimal(ratio);
             bd = bd.setScale(4, RoundingMode.HALF_UP);
             String res = bd.toString() + " x";
