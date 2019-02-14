@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    card_view:cardCornerRadius="4dp"
+    android:layout_marginRight="8dp"
+    card_view:cardBackgroundColor="@color/game_icon_background_color">
 <LinearLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,6 +16,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/trade_linear_layout"
     android:gravity="center_horizontal"
+    android:background="@color/game_icon_background_color"
     android:weightSum="7"
     android:orientation="horizontal">
         <ImageButton
@@ -14,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="8dp"
+            android:background="@color/game_icon_background_color"
             android:layout_weight="1"
             android:src="@drawable/stock_icon"
             android:layout_marginEnd="8dp"
@@ -26,8 +38,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:textColor="@color/design_dark"
-            android:textSize="16sp" />
+            android:textColor="@color/game_text_color"
+            android:textSize="18sp" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/list_trade_view_row_sell_image"
@@ -59,8 +71,8 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:textColor="@color/design_dark"
-            android:textSize="16sp" />
+            android:textColor="@color/game_text_color"
+            android:textSize="18sp" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/list_trade_view_row_buy_image"
@@ -76,6 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:background="@color/game_icon_background_color"
             android:src="@drawable/message_icon"
             android:contentDescription="@string/send_message" />
     </LinearLayout>
+</android.support.v7.widget.CardView>

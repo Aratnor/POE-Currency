@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
 // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
-            window.setStatusBarColor(ContextCompat.getColor(this,R.color.design_status_bar));
+            window.setStatusBarColor(ContextCompat.getColor(this,R.color.design_dark));
         }
     }
 
@@ -107,5 +107,6 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
+
 
 }

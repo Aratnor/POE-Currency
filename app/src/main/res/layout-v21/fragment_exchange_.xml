@@ -81,7 +81,7 @@
 
             <CheckBox
                 android:id="@+id/search_all_buy_checkBox"
-                android:background="@color/game_icon_background_color"
+                android:background="@color/game_background_color"
                 android:textColor="@color/game_text_color"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
 
             <CheckBox
                 android:id="@+id/search_all_sell_checkBox"
-                android:background="@color/game_icon_background_color"
+                android:background="@color/game_background_color"
                 android:textColor="@color/game_text_color"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -117,9 +117,10 @@
         android:id="@+id/transactions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="120dp"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

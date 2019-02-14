@@ -41,26 +41,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/trade_search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/search_icon"
-        app:backgroundTint="@color/button_color"
+        app:backgroundTint="@color/game_icon_background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trade_list_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="120dp"
+        android:clipToPadding="false"
+        android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

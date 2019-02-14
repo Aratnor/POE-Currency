@@ -9,10 +9,6 @@ public class CurrencyTransaction {
         return buyCurrency;
     }
 
-    public void setBuyCurrency(double buyCurrency) {
-        this.buyCurrency = buyCurrency;
-    }
-
     public double getSellCurrency() {
         return sellCurrency;
     }

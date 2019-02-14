@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/game_background_color">
 
@@ -78,7 +78,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="horizontal">
-
+            <CheckBox
+                android:id="@+id/search_all_sell_checkBox"
+                android:background="@color/game_icon_background_color"
+                android:textColor="@color/game_text_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/checkbox_search_all"
+                tools:ignore="NestedWeights" />
             <CheckBox
                 android:id="@+id/search_all_buy_checkBox"
                 android:background="@color/game_icon_background_color"
@@ -88,15 +96,6 @@
                 android:layout_weight="1"
                 android:text="@string/checkbox_search_all_2"
                 tools:ignore="NestedWeights" />
-
-            <CheckBox
-                android:id="@+id/search_all_sell_checkBox"
-                android:background="@color/game_icon_background_color"
-                android:textColor="@color/game_text_color"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/checkbox_search_all" />
         </LinearLayout>
         <android.support.v7.widget.CardView
             android:layout_marginLeft="4dp"
@@ -109,10 +108,10 @@
                 android:id="@+id/league"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@android:style/Widget.Spinner"
+                android:background="@drawable/bg_spinner"
                 android:popupBackground="@color/game_icon_background_color"
-                android:background="@color/game_icon_background_color"
-
-            />
+                />
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
@@ -120,9 +119,10 @@
         android:id="@+id/transactions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="120dp"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

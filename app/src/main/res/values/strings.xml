@@ -6,10 +6,18 @@
     <string name="info_text">text_id</string>
     <string name="spinner_have_text">What will u sell ?</string>
     <string name="spinner_search_text">What will u buy ?</string>
-    <string name="checkbox_search_all">All Buy</string>
-    <string name="checkbox_search_all_2">All Sell</string>
+    <string name="checkbox_search_all">All Sell</string>
+    <string name="checkbox_search_all_2">All Buy</string>
     <string name="bottom_nav_exchange">Exchange</string>
     <string name="bottom_nav_trade">Trade</string>
+
+    <string-array name="leagues">
+        <item>Betrayal</item>
+        <item>Hardcore Betrayal</item>
+        <item>Standard</item>
+        <item>Hardcore</item>
+    </string-array>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

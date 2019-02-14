@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -19,6 +18,7 @@ import com.example.tuna.poecurrency.adapters.CustomLeagueSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomListViewAdapter;
 import com.example.tuna.poecurrency.adapters.CustomSpinnerAdapter;
 import com.example.tuna.poecurrency.elements.CurrencyTransaction;
+import com.example.tuna.poecurrency.elements.Item;
 import com.example.tuna.poecurrency.elements.ItemProperties;
 import com.example.tuna.poecurrency.network.NetworkAPI;
 import com.example.tuna.poecurrency.stringutils.StringHelperAPI;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class Exchange_Fragment extends Fragment{
-    CheckBox sell ,buy ;
+    CheckBox sell_checkBox, buy_checkBox;
     Spinner spinnerSell,spinnerBuy,spinnerLeague;
     RecyclerView mRecyclerView;
 
@@ -52,8 +52,8 @@ public class Exchange_Fragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_exchange_, container, false);
-        buy = rootView.findViewById(R.id.search_all_buy_checkBox);
-        sell = rootView.findViewById(R.id.search_all_sell_checkBox);
+        buy_checkBox = rootView.findViewById(R.id.search_all_buy_checkBox);
+        sell_checkBox = rootView.findViewById(R.id.search_all_sell_checkBox);
 
         spinnerSell = rootView.findViewById(R.id.spinnerSell);
         spinnerBuy = rootView.findViewById(R.id.spinnerBuy);
@@ -151,10 +151,12 @@ public class Exchange_Fragment extends Fragment{
         //spinner_league_title = spinnerLeague.getSelectedItem().toString();
         if(getAllSellCheckBoxStatus()) {
             String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
+            //spinnerBuy.setSelection(ItemProperties.itemNames.length-1);
             System.out.println("All Select url is :" + url);
             getAllCurrencyRate(url, spinner_buy_position,1);
         }
         else if(getAllBuyCheckBoxStatus()) {
+            //spinnerSell.setSelection(ItemProperties.itemNames.length-1);
             String url = prepareAllSearchURL(ItemProperties.itemIds[spinner_sell_position]);
             System.out.println("URl of allbuy :" + url);
             getAllCurrencyRate(url, spinner_sell_position,2);
@@ -163,8 +165,16 @@ public class Exchange_Fragment extends Fragment{
             String url = prepareURL(ItemProperties.itemIds[spinner_sell_position],ItemProperties.itemIds[spinner_buy_position]);
 
             String [] vals = getCurrencyRate(url).split(" ");
-            double value1 = Double.parseDouble(vals[0]);
-            double value2 = Double.parseDouble(vals[1]);
+            double value1;
+            double value2;
+            if(vals[0].equals("No-Trade")){
+                value1 = 0;
+                value2 = 0;
+            }
+            else {
+                value1 = Double.parseDouble(vals[0]);
+                value2 = Double.parseDouble(vals[1]);
+            }
             transactions = new ArrayList<>();
 
             CurrencyTransaction transaction = new CurrencyTransaction(value1,value2, spinner_sell_position);
@@ -184,19 +194,19 @@ public class Exchange_Fragment extends Fragment{
     }
 
     private void setCheckBoxes() {
-        sell.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        sell_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if(isChecked) {
-                    buy.setChecked(false);
+                    buy_checkBox.setChecked(false);
                 }
             }
         });
-        buy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        buy_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if(isChecked) {
-                    sell.setChecked(false);
+                    sell_checkBox.setChecked(false);
                 }
             }
         });
@@ -215,10 +225,10 @@ public class Exchange_Fragment extends Fragment{
     }
 
     private boolean getAllSellCheckBoxStatus() {
-        return sell.isChecked();
+        return sell_checkBox.isChecked();
     }
     private  boolean getAllBuyCheckBoxStatus() {
-        return buy.isChecked();
+        return buy_checkBox.isChecked();
     }
     private void setSpinner(){
 
