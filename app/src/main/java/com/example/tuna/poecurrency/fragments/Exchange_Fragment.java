@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.app.Fragment;
@@ -36,6 +37,8 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     Spinner spinnerSell,spinnerBuy,spinnerLeague;
     RecyclerView mRecyclerView;
     RelativeLayout loadingPanel;
+    ImageView league_icon;
+
     CustomSpinnerAdapter adapter;
     int spinner_sell_position = 0;
     int spinner_buy_position = 0;
@@ -65,11 +68,23 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
         spinnerLeague = rootView.findViewById(R.id.league);
 
         loadingPanel = rootView.findViewById(R.id.loadingPanel);
+
+        league_icon = rootView.findViewById(R.id.league_image);
+
         setAdapter(getActivity());
         setSpinner();
         setCheckBoxes();
 
         FloatingActionButton search_button = rootView.findViewById(R.id.search_button);
+
+        league_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinnerLeague.performClick();
+            }
+        });
+
+
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +109,6 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     }
 
     private void getOneCurrencyTransaction(){
-        loadingPanel.setVisibility(View.VISIBLE);
         networkConnection = new NetworkAPI();
         String res = null;
         String url = prepareURL(ItemProperties.itemIds[spinner_sell_position],ItemProperties.itemIds[spinner_buy_position]);
@@ -113,15 +127,14 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     private void getAllCurrencyRate(String uri,int position,int flag) {
         switch (flag) {
             case 1 :
-                getAllSellCurrency(uri,position);
+                getAllSellCurrency(uri);
                 break;
             case 2: getAllBuyCurrency(uri);
             break;
         }
 
     }
-    private void getAllSellCurrency(String uri,int position) {
-        loadingPanel.setVisibility(View.VISIBLE);
+    private void getAllSellCurrency(String uri) {
         networkConnection = new NetworkAPI();
         String res = null;
         try {
@@ -136,7 +149,6 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     }
 
     private void getAllBuyCurrency(String uri) {
-        loadingPanel.setVisibility(View.VISIBLE);
         networkConnection = new NetworkAPI();
         String res = null;
         try {
@@ -149,6 +161,7 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     }
 
     public void search() {
+        loadingPanel.setVisibility(View.VISIBLE);
         if(getAllSellCheckBoxStatus()) {
             String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
             System.out.println("All Select url is :" + url);

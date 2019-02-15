@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -31,9 +32,9 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
         setStatusBarColor();
 
-        BottomAppBar nav = findViewById(R.id.bottomNavigationView);
+        BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
 
-        /*nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity{
                 }
                 return false;
             }
-        });*/
+        });
     }
 
     @Override

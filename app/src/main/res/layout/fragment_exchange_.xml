@@ -106,12 +106,16 @@
             android:layout_marginStart="4dp">
             <Spinner
                 android:id="@+id/league"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 style="@android:style/Widget.Spinner"
-                android:background="@drawable/bg_spinner"
+                android:background="@drawable/border"
                 android:popupBackground="@color/game_icon_background_color"
                 />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/drop_down_icon"/>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
@@ -143,6 +147,7 @@
     <RelativeLayout
         style="@style/GenericProgressBackground"
         android:id="@+id/loadingPanel"
+        android:visibility="invisible"
         >
         <ProgressBar
             style="@style/GenericProgressIndicator"/>
