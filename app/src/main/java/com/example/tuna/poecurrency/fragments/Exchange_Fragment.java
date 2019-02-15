@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.app.Fragment;
 import com.example.tuna.poecurrency.R;
 import com.example.tuna.poecurrency.adapters.CustomLeagueSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomListViewAdapter;
 import com.example.tuna.poecurrency.adapters.CustomSpinnerAdapter;
+import com.example.tuna.poecurrency.async.AllBuyWorker;
+import com.example.tuna.poecurrency.async.AllSellWorker;
 import com.example.tuna.poecurrency.async.OneSearchWorker;
 import com.example.tuna.poecurrency.elements.CurrencyTransaction;
 import com.example.tuna.poecurrency.elements.Item;
@@ -32,7 +35,7 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     CheckBox sell_checkBox, buy_checkBox;
     Spinner spinnerSell,spinnerBuy,spinnerLeague;
     RecyclerView mRecyclerView;
-
+    RelativeLayout loadingPanel;
     CustomSpinnerAdapter adapter;
     int spinner_sell_position = 0;
     int spinner_buy_position = 0;
@@ -61,6 +64,7 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
         spinnerBuy = rootView.findViewById(R.id.spinnerBuy);
         spinnerLeague = rootView.findViewById(R.id.league);
 
+        loadingPanel = rootView.findViewById(R.id.loadingPanel);
         setAdapter(getActivity());
         setSpinner();
         setCheckBoxes();
@@ -90,6 +94,7 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     }
 
     private void getOneCurrencyTransaction(){
+        loadingPanel.setVisibility(View.VISIBLE);
         networkConnection = new NetworkAPI();
         String res = null;
         String url = prepareURL(ItemProperties.itemIds[spinner_sell_position],ItemProperties.itemIds[spinner_buy_position]);
@@ -110,12 +115,13 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
             case 1 :
                 getAllSellCurrency(uri,position);
                 break;
-            case 2: getAllBuyCurrency(uri,position);
+            case 2: getAllBuyCurrency(uri);
             break;
         }
 
     }
     private void getAllSellCurrency(String uri,int position) {
+        loadingPanel.setVisibility(View.VISIBLE);
         networkConnection = new NetworkAPI();
         String res = null;
         try {
@@ -125,30 +131,21 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        StringHelperAPI helperAPI = new StringHelperAPI(res);
-        transactions = helperAPI.getAllBuyCurrencyTransactions();
-        listViewAdapter = new CustomListViewAdapter(getActivity(),transactions,position);
-        listViewAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(listViewAdapter);
-        listViewAdapter.notifyDataSetChanged();
+        AllSellWorker allSellWorker = new AllSellWorker(this);
+        allSellWorker.execute(res);
     }
 
-    private void getAllBuyCurrency(String uri,int position) {
+    private void getAllBuyCurrency(String uri) {
+        loadingPanel.setVisibility(View.VISIBLE);
         networkConnection = new NetworkAPI();
         String res = null;
         try {
             res = networkConnection.execute(uri).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        StringHelperAPI helperAPI = new StringHelperAPI(res);
-        transactions = helperAPI.getAllCurrencyTransactions();
-        listViewAdapter = new CustomListViewAdapter(getActivity(),transactions,position);
-        listViewAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(listViewAdapter);
-        listViewAdapter.notifyDataSetChanged();
+        AllBuyWorker allBuyWorker = new AllBuyWorker(this);
+        allBuyWorker.execute(res);
     }
 
     public void search() {
@@ -264,5 +261,25 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
         listViewAdapter = new CustomListViewAdapter(getActivity(),transactions, spinner_buy_position);
         listViewAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(listViewAdapter);
+        loadingPanel.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void updateAllBuyCurrency(ArrayList<CurrencyTransaction> transactions) {
+        listViewAdapter = new CustomListViewAdapter(getActivity(),transactions,spinner_sell_position);
+        listViewAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(listViewAdapter);
+        listViewAdapter.notifyDataSetChanged();
+        loadingPanel.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void updateAllSellCurrency(ArrayList<CurrencyTransaction> transactions) {
+        //buy pos
+        listViewAdapter = new CustomListViewAdapter(getActivity(),transactions,spinner_buy_position);
+        listViewAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(listViewAdapter);
+        listViewAdapter.notifyDataSetChanged();
+        loadingPanel.setVisibility(View.GONE);
     }
 }
