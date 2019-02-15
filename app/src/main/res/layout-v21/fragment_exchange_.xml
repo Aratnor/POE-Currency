@@ -10,7 +10,13 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2">
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/spinner_have_text_view"
@@ -48,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         <Spinner
-            android:background="@color/game_background_color"
+            android:background="@drawable/border"
             app:backgroundTint="@color/game_text_color"
             android:id="@+id/spinnerSell"
             android:layout_width="0dp"
@@ -56,7 +62,7 @@
             android:layout_weight="1" />
 
         <Spinner
-            android:background="@color/game_background_color"
+            android:background="@drawable/border"
             app:backgroundTint="@color/game_text_color"
             android:id="@+id/spinnerBuy"
             android:layout_width="0dp"
@@ -86,6 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="16sp"
                 android:text="@string/checkbox_search_all_2"
                 tools:ignore="NestedWeights" />
 
@@ -94,24 +101,31 @@
                 android:background="@color/game_background_color"
                 android:textColor="@color/game_text_color"
                 android:layout_width="0dp"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/checkbox_search_all" />
         </LinearLayout>
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/border"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:background="@color/game_background_color"
+            android:layout_marginBottom="2dp"
             android:layout_weight="2">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/game_icon_background_color"
+                android:weightSum="4"
                 android:orientation="horizontal">
             <Spinner
                 android:id="@+id/league"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/spinnerDropDownItemStyle"
+                android:background="@drawable/border"
+                android:layout_weight="3"
                 android:popupBackground="@color/game_icon_background_color"
             />
             <ImageView
@@ -119,6 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="@color/game_icon_background_color"
                 android:src="@drawable/drop_down_icon"
                 android:contentDescription="@string/icon_for_league_spinner" />
@@ -152,11 +167,14 @@
         android:layout_marginEnd="16dp" />
 
     <RelativeLayout
-        style="@style/GenericProgressBackground"
         android:id="@+id/loadingPanel"
+        style="@style/GenericProgressBackground"
         android:visibility="invisible"
-        >
-        <ProgressBar
-            style="@style/GenericProgressIndicator"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar style="@style/GenericProgressIndicator" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

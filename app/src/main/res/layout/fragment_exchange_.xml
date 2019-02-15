@@ -148,7 +148,7 @@
         style="@style/GenericProgressBackground"
         android:id="@+id/loadingPanel"
         android:visibility="invisible"
-        >
+        tools:ignore="MissingConstraints">
         <ProgressBar
             style="@style/GenericProgressIndicator"/>
     </RelativeLayout>

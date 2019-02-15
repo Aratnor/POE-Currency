@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/exchangeNav"
-        android:icon="@drawable/exchange_icon"
-        android:title="@string/bottom_nav_exchange" />
-    <item
-        android:id="@+id/tradeNav"
-        android:icon="@drawable/trade_icon"
-        android:title="@string/bottom_nav_trade" />
+<item
+    android:id="@+id/exchangeNav"
+    android:icon="@drawable/exchange_icon"
+    android:title="@string/bottom_nav_exchange" />
+<item
+    android:id="@+id/tradeNav"
+    android:icon="@drawable/trade_icon"
+    android:title="@string/bottom_nav_trade" />
 </menu>
