@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -30,9 +31,9 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
         setStatusBarColor();
 
-        BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
+        BottomAppBar nav = findViewById(R.id.bottomNavigationView);
 
-        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        /*nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity{
                 }
                 return false;
             }
-        });
+        });*/
     }
 
     @Override
