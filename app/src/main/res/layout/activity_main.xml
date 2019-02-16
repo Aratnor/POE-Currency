@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#2d2c2c"
+            android:background="@color/game_background_color"
             android:gravity="center"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"

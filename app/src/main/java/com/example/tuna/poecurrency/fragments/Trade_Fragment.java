@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import com.example.tuna.poecurrency.R;
+import com.example.tuna.poecurrency.adapters.CustomLeagueSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomTradeAdapter;
 import com.example.tuna.poecurrency.elements.ItemProperties;
@@ -29,14 +32,19 @@ import java.util.concurrent.ExecutionException;
 
 public class Trade_Fragment extends Fragment {
     ArrayList<TradeTransaction> transactions;
-    Spinner spinner_have, spinner_search;
+    Spinner spinner_have, spinner_search, spinner_league;
+    CheckBox only_online;
     FloatingActionButton search_button;
     SpinnerAdapter adapter;
+    CustomLeagueSpinnerAdapter league_adapter;
     NetworkAPI networkConnection;
     RecyclerView recyclerView;
+
+    ImageView league_icon;
+
     int spinner_have_pos = 0;
     int spinner_search_pos = 0;
-
+    String spinner_league_title = "Betrayal";
     CustomTradeAdapter tradeAdapter;
     public Trade_Fragment() {
         // Required empty public constructor
@@ -53,10 +61,22 @@ public class Trade_Fragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_trade_, container, false);
         spinner_have = root.findViewById(R.id.trade_spinner_have);
         spinner_search = root.findViewById(R.id.trade_spinner_want);
+        spinner_league = root.findViewById(R.id.league_trade);
 
         recyclerView = root.findViewById(R.id.trade_list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
+
+        only_online = root.findViewById(R.id.only_online_checkbox);
+
+        league_icon = root.findViewById(R.id.league_image_trade);
+
+        league_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner_league.performClick();
+            }
+        });
 
         setAdapter(getActivity());
         setSpinner();
@@ -104,9 +124,28 @@ public class Trade_Fragment extends Fragment {
     }
 
     private String prepareUrl() {
-        String url = "http://currency.poe.trade/search?league=Betrayal&online=x&stock=&want="
-                +ItemProperties.itemIds[spinner_search_pos]+"&have="
-                +ItemProperties.itemIds[spinner_have_pos];
+        String url ="";
+        if(only_online.isChecked()){
+            if(spinner_league_title.equals("Hardcore Betrayal"))
+                url = "http://currency.poe.trade/search?league=Hardcore+Betrayal&online=x&stock=&want="
+                        +ItemProperties.itemIds[spinner_search_pos]+"&have="
+                        +ItemProperties.itemIds[spinner_have_pos];
+            else
+                url = "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want="
+                        +ItemProperties.itemIds[spinner_search_pos]+"&have="
+                        +ItemProperties.itemIds[spinner_have_pos];
+
+        }
+        else {
+            if(spinner_league_title.equals("Hardcore Betrayal"))
+                url = "http://currency.poe.trade/search?league=Hardcore+Betrayal&online=&stock=&want="
+                        +ItemProperties.itemIds[spinner_search_pos]+"&have="
+                        +ItemProperties.itemIds[spinner_have_pos];
+            else
+                url = "http://currency.poe.trade/search?league="+spinner_league_title+"&online=&stock=&want="
+                        +ItemProperties.itemIds[spinner_search_pos]+"&have="
+                        +ItemProperties.itemIds[spinner_have_pos];
+        }
         System.out.println("Last url :" +url);
         try {
             return new NetworkAPI().execute(url).get();
@@ -123,11 +162,16 @@ public class Trade_Fragment extends Fragment {
         spinner_have.setAdapter(adapter);
 
         spinner_search.setAdapter(adapter);
+
+        spinner_league.setAdapter(league_adapter);
     }
 
     private void setAdapter(Context context) {
         adapter = new CustomSpinnerAdapter(context, ItemProperties.itemNames
                 , ItemProperties.itemImages);
+
+        league_adapter =
+                new CustomLeagueSpinnerAdapter(getActivity(),ItemProperties.leagues);
     }
     private void spinnerOnClickPrepare() {
         spinner_have.setSelection(0);
@@ -155,6 +199,17 @@ public class Trade_Fragment extends Fragment {
                 // your code here
             }
 
+        });
+        spinner_league.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinner_league_title = ItemProperties.leagues[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
     }
 }

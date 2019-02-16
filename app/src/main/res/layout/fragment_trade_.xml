@@ -8,11 +8,45 @@
     tools:context=".fragments.Trade_Fragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:weightSum="2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/border_text"
+            android:gravity="center_horizontal"
+            android:text="@string/sell"
+            android:textColor="@color/game_text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/border_text"
+            android:gravity="center_horizontal"
+            android:text="@string/buy"
+            android:textColor="@color/game_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Spinner
             android:id="@+id/trade_spinner_have"
@@ -22,8 +56,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:popupBackground="@color/game_icon_background_color"
-            android:background="@color/game_icon_background_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,13 +69,49 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:src="@drawable/search_icon"
+            android:background="@drawable/border"
             android:popupBackground="@color/game_icon_background_color"
-            android:background="@color/game_icon_background_color"
+            android:src="@drawable/search_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/game_icon_background_color"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp">
+        <CheckBox
+            android:id="@+id/only_online_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/only_online"
+            android:textColor="@color/game_text_color"
+            android:layout_weight="1"/>
+        <Spinner
+            android:id="@+id/league_trade"
+            style="@style/spinnerDropDownItemStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/border"
+            android:popupBackground="@color/game_icon_background_color" />
+
+        <ImageView
+            android:id="@+id/league_image_trade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/game_icon_background_color"
+            android:contentDescription="@string/icon_for_league_spinner"
+            android:src="@drawable/drop_down_icon" />
+    </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/trade_search_button"
         android:layout_width="wrap_content"
@@ -58,11 +128,12 @@
         android:id="@+id/trade_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="120dp"
-        android:clipToPadding="false"
         android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 </android.support.constraint.ConstraintLayout>

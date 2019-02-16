@@ -140,8 +140,8 @@ public class StringHelperAPI {
                 {
                     String[] words = values[0].split(" ");
                     for (String word : words) {
-                        if (word.contains("data-username")) {
-                            String sub = word.substring(15, word.length() - 1);
+                        if (word.contains("data-ign")) {
+                            String sub = word.substring(10, word.length() - 1);
                           //  System.out.println("User name :" + sub);
                             userName = sub;
                         } else if (word.contains("data-buycurrency")) {

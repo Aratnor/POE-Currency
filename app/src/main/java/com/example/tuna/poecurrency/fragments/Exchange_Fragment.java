@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.app.Fragment;
+import android.widget.TextView;
+
 import com.example.tuna.poecurrency.R;
 import com.example.tuna.poecurrency.adapters.CustomLeagueSpinnerAdapter;
 import com.example.tuna.poecurrency.adapters.CustomListViewAdapter;
@@ -40,6 +42,7 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     ImageView league_icon;
 
     CustomSpinnerAdapter adapter;
+    CustomLeagueSpinnerAdapter league_adapter;
     int spinner_sell_position = 0;
     int spinner_buy_position = 0;
     String spinner_league_title = "Betrayal";
@@ -181,6 +184,8 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     private void setAdapter(Context context) {
        adapter = new CustomSpinnerAdapter(context,ItemProperties.itemNames
                 , ItemProperties.itemImages);
+        league_adapter =
+                new CustomLeagueSpinnerAdapter(getActivity(),ItemProperties.leagues);
     }
 
     private void setCheckBoxes() {
@@ -203,14 +208,24 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
     }
 
     private String prepareURL(int id1,int id2){
-        return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want="
+        if(spinner_league_title.equals("Hardcore Betrayal"))
+        return "http://currency.poe.trade/search?league=Hardcore+Betrayal&online=x&stock=&want="
+                + id2 +"&have=" + id1;
+        else
+            return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want="
                 + id2 +"&have=" + id1;
     }
 
     private String prepareAllSearchURL(int id2) {
+        if(spinner_league_title.equals("Hardcore Betrayal"))
+            return "http://currency.poe.trade/search?league=Hardcore+Betrayal&online=x&stock=&want=&have=" + id2;
+        else
         return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want=&have=" + id2;
     }
     private String prepareAllBuyURL(int id1) {
+        if(spinner_league_title.equals("Hardcore Betrayal"))
+            return "http://currency.poe.trade/search?league=Hardcore+Betrayal&online=x&stock=&want="+id1 +"&have=";
+        else
         return "http://currency.poe.trade/search?league="+spinner_league_title+"&online=x&stock=&want="+id1 +"&have=";
     }
 
@@ -225,9 +240,6 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
         spinnerSell.setAdapter(adapter);
 
         spinnerBuy.setAdapter(adapter);
-
-        CustomLeagueSpinnerAdapter league_adapter =
-                new CustomLeagueSpinnerAdapter(getActivity(),ItemProperties.leagues);
 
         spinnerLeague.setAdapter(league_adapter);
         spinnerOnClickPrepare();
@@ -260,6 +272,17 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
                 // your code here
             }
 
+        });
+        spinnerLeague.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinner_league_title = ItemProperties.leagues[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
     }
 

@@ -4,8 +4,8 @@
     <string name="title">POE Currency</string>
     <string name="button_search">Search</string>
     <string name="info_text">text_id</string>
-    <string name="spinner_have_text">What will u sell ?</string>
-    <string name="spinner_search_text">What will u buy ?</string>
+    <string name="spinner_have_text">Sell</string>
+    <string name="spinner_search_text">Buy</string>
     <string name="checkbox_search_all">All Sell</string>
     <string name="checkbox_search_all_2">All Buy</string>
     <string name="bottom_nav_exchange">Exchange</string>
@@ -26,4 +26,6 @@
     <string name="drop_down_icon">Drop down icon</string>
     <string name="icon_for_league_spinner">Icon for League Spinner</string>
     <string name="only_online">Only Online</string>
+    <string name="sell">Sell</string>
+    <string name="buy">Buy</string>
 </resources>

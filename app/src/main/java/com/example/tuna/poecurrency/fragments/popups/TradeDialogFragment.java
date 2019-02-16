@@ -23,7 +23,10 @@ public class TradeDialogFragment extends DialogFragment {
         return rootView;
     }
     public void setText(int stock) {
+        if(stock > 0)
         text = "Total stock :" + stock;
+        else
+            text = "No stock info";
     }
     public void setUserName(String value) {
         text = value;
