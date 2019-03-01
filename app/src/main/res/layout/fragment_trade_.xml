@@ -79,32 +79,32 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:background="@color/game_icon_background_color"
         android:orientation="horizontal"
-        android:weightSum="4"
+        android:weightSum="8"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:layout_editor_absoluteX="0dp">
         <CheckBox
             android:id="@+id/only_online_checkbox"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/only_online"
             android:textColor="@color/game_text_color"
-            android:layout_weight="1"/>
+            android:layout_weight="4"/>
         <Spinner
             android:id="@+id/league_trade"
             style="@style/spinnerDropDownItemStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:background="@drawable/border"
             android:popupBackground="@color/game_icon_background_color" />
 
         <ImageView
             android:id="@+id/league_image_trade"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
