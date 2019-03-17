@@ -30,7 +30,7 @@ public final class ItemProperties {
     };
 
     public static final String [] leagues = {
-            "Betrayal","Hardcore Betrayal","Standard","Hardcore"
+            "Synthesis","Hardcore Synthesis","Standard","Hardcore"
     };
 
     public static int getPosition(int id) {
