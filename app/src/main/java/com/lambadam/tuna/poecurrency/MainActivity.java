@@ -17,10 +17,12 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lambadam.tuna.poecurrency.fragments.Exchange_Fragment;
 import com.lambadam.tuna.poecurrency.fragments.Trade_Fragment;
 
 public class MainActivity extends AppCompatActivity{
+    BottomNavigationViewEx nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,23 +32,29 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
         setStatusBarColor();
 
-        BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
-
+        nav = findViewById(R.id.bottomNavigationView);
+        nav.enableAnimation(false);
+        nav.enableItemShiftingMode(false);
+        nav.enableShiftingMode(false);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-                if(item.getTitle().equals("Exchange")) {
-                    Exchange_Fragment exchange_fragment = new Exchange_Fragment();
-                    switchFragments(exchange_fragment);
-                }
-                else if(item.getTitle().equals("Trade")) {
-                    Trade_Fragment trade_fragment = new Trade_Fragment();
-                    switchFragments(trade_fragment);
+                switch (item.getItemId()) {
+                    case R.id.exchangeNav:
+                        Exchange_Fragment exchange_fragment = new Exchange_Fragment();
+                        switchFragments(exchange_fragment);
+                        return true;
+                    case R.id.tradeNav:
+                        Trade_Fragment trade_fragment = new Trade_Fragment();
+                        switchFragments(trade_fragment);
+                        return true;
                 }
                 return false;
             }
         });
+
+        Exchange_Fragment exchange_fragment = new Exchange_Fragment();
+        addFragments(exchange_fragment);
     }
 
     @Override
@@ -58,11 +66,18 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    private void addFragments(Fragment fragment) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.fragment_container,fragment,"1");
+        transaction.commit();
+
+    }
+
     private void switchFragments(Fragment fragment) {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_container,fragment,"1");
-        transaction.addToBackStack(null);
         transaction.commit();
 
     }
@@ -79,6 +94,11 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(nav.getSelectedItemId() == R.id.tradeNav)nav.setSelectedItemId(R.id.exchangeNav);
+        else super.onBackPressed();
+    }
 
     private void checkPermissions () {
         internetPermission();
