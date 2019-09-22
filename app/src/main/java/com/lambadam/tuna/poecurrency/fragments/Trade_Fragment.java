@@ -1,7 +1,11 @@
 package com.lambadam.tuna.poecurrency.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
@@ -104,12 +108,33 @@ public class Trade_Fragment extends Fragment {
     }
 
     private void getTransactions() {
-        String res = prepareUrl();
-        StringHelperAPI helperAPI = new StringHelperAPI(res);
-        transactions = helperAPI.getAllTradeCurrencyTransactions(res);
-        for(TradeTransaction transaction : transactions) System.out.println(transaction.toString());
-        setRecyclerAdapter();
-        setRecyclerViewWithAdapter();
+        if(isNetworkAvailable()){
+            String res = prepareUrl();
+            StringHelperAPI helperAPI = new StringHelperAPI(res);
+            transactions = helperAPI.getAllTradeCurrencyTransactions(res);
+            for(TradeTransaction transaction : transactions) System.out.println(transaction.toString());
+            setRecyclerAdapter();
+            setRecyclerViewWithAdapter();
+        }
+        else {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setTitle("Warning");
+            alertDialog.setMessage("Need internet connection!");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void setRecyclerAdapter() {

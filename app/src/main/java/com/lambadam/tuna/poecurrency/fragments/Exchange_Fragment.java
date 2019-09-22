@@ -1,6 +1,10 @@
 package com.lambadam.tuna.poecurrency.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -162,20 +166,42 @@ public class Exchange_Fragment extends Fragment implements UpdateList {
 
     public void search() {
         loadingPanel.setVisibility(View.VISIBLE);
-        if(getAllSellCheckBoxStatus()) {
-            String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
-            System.out.println("All Select url is :" + url);
-            getAllCurrencyRate(url, spinner_buy_position,1);
-        }
-        else if(getAllBuyCheckBoxStatus()) {
-            //spinnerSell.setSelection(ItemProperties.itemNames.length-1);
-            String url = prepareAllSearchURL(ItemProperties.itemIds[spinner_sell_position]);
-            System.out.println("URl of allbuy :" + url);
-            getAllCurrencyRate(url, spinner_sell_position,2);
+        if(isNetworkAvailable()){
+            if(getAllSellCheckBoxStatus()) {
+                String url = prepareAllBuyURL(ItemProperties.itemIds[spinner_buy_position]);
+                System.out.println("All Select url is :" + url);
+                getAllCurrencyRate(url, spinner_buy_position,1);
+            }
+            else if(getAllBuyCheckBoxStatus()) {
+                //spinnerSell.setSelection(ItemProperties.itemNames.length-1);
+                String url = prepareAllSearchURL(ItemProperties.itemIds[spinner_sell_position]);
+                System.out.println("URl of allbuy :" + url);
+                getAllCurrencyRate(url, spinner_sell_position,2);
+            }
+            else {
+                getOneCurrencyTransaction();
+            }
         }
         else {
-            getOneCurrencyTransaction();
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setTitle("Warning");
+            alertDialog.setMessage("Need internet connection!");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
         }
+        loadingPanel.setVisibility(View.INVISIBLE);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void setAdapter(Context context) {
